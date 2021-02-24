@@ -17,6 +17,8 @@ class User(Base):
     name = Column(String(250), nullable=False)
     username = Column(String(250), nullable=False)
     password = Column(String(250), nullable=False)
+    fav_planets = relationship('FavPlanets')
+    fav_characters = relationship('FavCharacters')
 
 class Planet(Base):
     __tablename__ = 'planet'
@@ -53,9 +55,8 @@ class FavPlanets(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     userId = Column(Integer, ForeignKey('user.id'))
-    userId = relationship(User)
     planetId = Column(Integer, ForeignKey('planet.id'))
-    planetId = relationship(Planet)
+    
 
 class FavCharacters(Base):
     __tablename__ = 'favCharacters'
@@ -63,25 +64,10 @@ class FavCharacters(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     userId = Column(Integer, ForeignKey('user.id'))
-    userId = relationship(User)
     characterId = Column(Integer, ForeignKey('character.id'))
-    characterId = relationship(Character)
+    
 
-class People(Base):
-    __tablename__='people'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
-    url = Column(String(250), nullable=False)
-    characterId = Column(Integer, ForeignKey('character.id'))
-    characterId = relationship(Character)
 
-class Planets(Base):
-    __tablename__='planets'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
-    url = Column(String(250), nullable=False)
-    planetId = Column(Integer, ForeignKey('planet.id'))
-    planetId = relationship(Planet)
 
 
     def to_dict(self):
